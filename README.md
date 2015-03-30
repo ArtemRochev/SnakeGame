@@ -1,2 +1,3 @@
 # snake
 snake game
+:)

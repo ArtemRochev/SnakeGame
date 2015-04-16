@@ -12,8 +12,8 @@
 #define TIME_UPDATE_COLOR 1
 #define W_SQUARE 7
 #define H_SQUARE 7
-#define WIN_W 80
-#define WIN_H 80
+#define WIN_W 50
+#define WIN_H 50
 
 Dialog::Dialog(QWidget *parent) : QDialog(parent), isUpdateingColors(false) {
     colorSquares = new QColor(RGB_SQUARE);
@@ -31,9 +31,9 @@ Dialog::Dialog(QWidget *parent) : QDialog(parent), isUpdateingColors(false) {
     status->setGeometry(0, height() + 80, width() - 80, 20);
     snake = new Snake(this, 0, 0);
     updateStatus();
-    for ( int  i = 0; i < 10; i++ ) {
-        addEat();
-    }
+//    for ( int  i = 0; i < 10; i++ ) {
+//        addEat();
+//    }
 }
 
 void Dialog::updateStatus() {

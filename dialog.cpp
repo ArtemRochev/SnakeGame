@@ -21,41 +21,21 @@ Dialog::Dialog(QWidget *parent) : QDialog(parent), isUpdateingColors(false) {
     sizeSquare = W_SQUARE;
     amountSquares = WIN_W * WIN_H;
     squaresStorage = new QVector<Square*>();
+    setFixedSize(W_SQUARE * WIN_W, H_SQUARE * WIN_H);
 
     for ( int i = 0; i < amountSquares; i++ ) {
         squaresStorage->append(new Square(colorSquares, this));
     }
     status = new QLabel(this);
-    sore = 0;
-    setStyleSheet("background-color: grey");
     status->setGeometry(0, height() + 80, width() - 80, 20);
     snake = new Snake(this, 0, 0);
-    updateStatus();
 //    for ( int  i = 0; i < 10; i++ ) {
 //        addEat();
 //    }
 }
 
-void Dialog::updateStatus() {
-    status->setText("Очки: " + QString::number(sore * 10) + " ` Размер: " + QString::number(snake->getSize()) + " ` Скорость: " + QString::number((snake->getSlowTime() - 100) * -1) + "%");
-}
-
 void Dialog::updateColorsSquares() {
 
-}
-
-int Dialog::getSore() {
-    return sore;
-}
-
-void Dialog::setSore(int newSore) {
-    sore = newSore;
-    updateStatus();
-}
-
-void Dialog::soreIncrement() {
-    sore += 1;
-    updateStatus();
 }
 
 int Dialog::getSizeSquare() {

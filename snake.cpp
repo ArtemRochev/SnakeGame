@@ -69,13 +69,11 @@ void Snake::moveTo(int x, int y) {
     deleteLast();
     if ( getSquareFromDailog(x, y)->isEat() ) {
         size += 1;
-        dialog->soreIncrement();
         if ( slowTime > 1 ) {
             slowTime -= 5;
         }
         getSquareFromDailog(x, y)->setIsEat(false);
         color = getSquareFromDailog(x, y)->getColor();
-        dialog->updateStatus();
         dialog->addEat();
     } else {
         body->remove(size-1);

@@ -18,11 +18,7 @@ class Dialog : public QDialog {
         Dialog(QWidget *parent = 0);
         ~Dialog();
 
-        void updateStatus();
         void updateColorsSquares();
-        int getSore();
-        void setSore(int newSore);
-        void soreIncrement();
         int getAmountSquares();
         int getSizeSquare();
         bool isUpdateingColors;
@@ -37,7 +33,6 @@ class Dialog : public QDialog {
     protected:
 
     private:
-        int sore;
         int sizeSquare;
         int amountSquares;
         int updatedColorSqrCounter;

@@ -14,21 +14,6 @@
 class Dialog : public QDialog {
     Q_OBJECT
 
-    public:
-        Dialog(QWidget *parent = 0);
-        ~Dialog();
-
-        int getAmountBlocks();
-        int getSideLenghtBlock();
-        bool isUpdateingColors;
-        QColor* getColorBlocks();
-        Block* getBlockAt(int x, int y);
-
-    public slots:
-        void addEat();
-
-    protected:
-
     private:
         int blockSideLength;
         int amountBlocks;
@@ -42,6 +27,19 @@ class Dialog : public QDialog {
         QPoint currentSnakePos;
 
         void keyPressEvent(QKeyEvent*);
+
+    public:
+        Dialog(QWidget *parent = 0);
+        ~Dialog();
+
+        void fillByBlocks();
+        int getAmountBlocks() const;
+        int getSideLenghtBlock() const;
+        QColor* getColorBlocks() const;
+        Block* getBlockAt(int x, int y) const;
+
+    public slots:
+        void addEat();
 };
 
 #endif // DIALOG_H

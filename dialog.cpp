@@ -8,49 +8,53 @@
 #include <QKeyEvent>
 #include <QHBoxLayout>
 
-#define RGB_SQUARE   120, 190, 255
-#define TIME_UPDATE_COLOR 1
-#define W_SQUARE 30
-#define H_SQUARE 30
-#define WIN_W 15
-#define WIN_H 15
+#define RGB_SQUARE   104, 138, 8
+#define W_BLOCK_AMOUNT 25
+#define H_BLOCK_AMOUNT 25
 
-Dialog::Dialog(QWidget *parent) : QDialog(parent), isUpdateingColors(false) {
+Dialog::Dialog(QWidget *parent) : QDialog(parent) {
     colorBlocks = new QColor(RGB_SQUARE);
     updatedColorSqrCounter = 0;
-    blockSideLength = W_SQUARE;
-    amountBlocks = WIN_W * WIN_H;
+    blockSideLength = 20;
+    amountBlocks = W_BLOCK_AMOUNT * H_BLOCK_AMOUNT;
     blocksStorage = new QVector<Block*>();
-    setFixedSize(W_SQUARE * WIN_W, H_SQUARE * WIN_H);
 
-    //for ( int i = 0; i < amountSquares; i++ ) {
-        blocksStorage->append(new Block(colorBlocks, W_SQUARE, this));
-    //}
-    //snake = new Snake(this, 0, 0);
-//    for ( int  i = 0; i < 10; i++ ) {
-//        addEat();
-//    }
+    setFixedSize(blockSideLength * W_BLOCK_AMOUNT, blockSideLength * H_BLOCK_AMOUNT);
+    fillByBlocks();
+
+    snake = new Snake(this, 0, 0);
+
+    for ( int  i = 0; i < 2; i++ ) {
+        addEat();
+    }
 }
 
-int Dialog::getSideLenghtBlock() {
+void Dialog::fillByBlocks() {
+    for ( int i = 0; i < amountBlocks; i++ ) {
+        blocksStorage->append(new Block(colorBlocks, blockSideLength, this));
+    }
+}
+
+int Dialog::getSideLenghtBlock() const {
     return blockSideLength;
 }
 
-QColor* Dialog::getColorBlocks() {
+QColor* Dialog::getColorBlocks() const {
     return colorBlocks;
 }
-int Dialog::getAmountBlocks() {
+int Dialog::getAmountBlocks() const {
     return amountBlocks;
 }
 
 void Dialog::addEat() {
-    int wRand = qrand() % WIN_W;
-    int hRand = qrand() % WIN_H;
+    int wRand = qrand() % W_BLOCK_AMOUNT;
+    int hRand = qrand() % H_BLOCK_AMOUNT;
+
     getBlockAt(wRand, hRand)->setEat();
 }
 
-Block* Dialog::getBlockAt(int x, int y) {
-    return (Block*) childAt(x * W_SQUARE, y * H_SQUARE);
+Block* Dialog::getBlockAt(int x, int y) const {
+    return (Block*) childAt(x * blockSideLength, y * blockSideLength);
 }
 
 void Dialog::keyPressEvent(QKeyEvent *event) {

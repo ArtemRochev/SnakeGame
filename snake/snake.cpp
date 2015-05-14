@@ -16,7 +16,7 @@ Snake::Snake(QWidget *parent, int x, int y) : QWidget(parent) {
     connect(timerMoveLeft, SIGNAL(timeout()), this, SLOT(moveLeft()));
 
     size = 5;
-    slowTime = 100;
+    slowTime = 150;
     body = new QVector<QPoint*>;
     currentVec = Right;
     color = new QColor(100, 0, 100);
@@ -96,6 +96,7 @@ void Snake::moveToStartPos(int x, int y) {
     lastPos = new QPoint(x+1-size, y);
     headPos->setX(x);
     headPos->setY(y);
+
     for ( int i = 0; i < size; i++ ) {
         getBlockFromDailog(x - i, y)->setColor(color);
         body->append(new QPoint(getBlockFromDailog(x - i, y)->x() / ((Dialog*) parent())->getSideLenghtBlock(), getBlockFromDailog(x - i, y)->y() / ((Dialog*) parent())->getSideLenghtBlock()));

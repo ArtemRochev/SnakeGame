@@ -12,13 +12,17 @@ int Block::posX = 0;
 int Block::posY = 0;
 int Block::counter = 0;
 
-Block::Block(QColor *color, int sideLength, QWidget *parent) : QWidget(parent), sideLength(sideLength) {
+Block::Block(QColor *color, int sideLength, QWidget *parent) :
+        QWidget(parent),
+        sideLength(sideLength),
+        colorBase(color),
+        colorCurrent(color) {
     setGeometry(posX, posY, sideLength, sideLength);
     posX += sideLength;
-    colorBase = color;
     colorCurrent = colorBase;
     eat = false;
     counter += 1;
+
     if ( counter % ( (int) sqrt(((Dialog*) parent)->getAmountBlocks())) == 0 ) {
         posY += sideLength;
         posX = 0;
@@ -27,6 +31,7 @@ Block::Block(QColor *color, int sideLength, QWidget *parent) : QWidget(parent), 
 
 void Block::paintEvent(QPaintEvent*) {
     QPainter p(this);
+
     p.setPen(Qt::red);
     p.fillRect(0, 0, 50, 50, QBrush(*colorCurrent));
 }
@@ -45,7 +50,7 @@ void Block::setIsEat(bool b) {
 }
 
 void Block::setEat() {
-    setColor(rand() % 200, rand() % 200, rand() % 200);
+    setColor(255, 0, 0);
     eat = true;
 }
 

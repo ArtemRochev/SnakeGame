@@ -24,14 +24,14 @@ Snake::Snake(QWidget *parent, int x, int y) : QWidget(parent) {
 }
 
 QColor* Snake::getColorBackground() {
-    return ((Dialog*) parent())->getColorSquares();
+    return ((Dialog*) parent())->getColorBlocks();
 }
 
-Square* Snake::getSquareFromDailog(QPoint *p) {
-    return ((Dialog*) parent())->getSquareAt(p->x(), p->y());
+Block* Snake::getBlockFromDailog(QPoint *p) {
+    return ((Dialog*) parent())->getBlockAt(p->x(), p->y());
 }
-Square* Snake::getSquareFromDailog(int x, int y) {
-    return ((Dialog*) parent())->getSquareAt(x, y);
+Block* Snake::getBlockFromDailog(int x, int y) {
+    return ((Dialog*) parent())->getBlockAt(x, y);
 }
 QPoint* Snake::getHeadPos() {
     return body->at(0);
@@ -67,13 +67,13 @@ void Snake::move(Vector vecNew) {
 void Snake::moveTo(int x, int y) {
     Dialog *dialog = (Dialog*) parent();
     deleteLast();
-    if ( getSquareFromDailog(x, y)->isEat() ) {
+    if ( getBlockFromDailog(x, y)->isEat() ) {
         size += 1;
         if ( slowTime > 1 ) {
             slowTime -= 5;
         }
-        getSquareFromDailog(x, y)->setIsEat(false);
-        color = getSquareFromDailog(x, y)->getColor();
+        getBlockFromDailog(x, y)->setIsEat(false);
+        color = getBlockFromDailog(x, y)->getColor();
         dialog->addEat();
     } else {
         body->remove(size-1);
@@ -85,7 +85,7 @@ void Snake::moveTo(int x, int y) {
 
     headPos->setX(x);
     headPos->setY(y);
-    getSquareFromDailog(x, y)->setColor(color);
+    getBlockFromDailog(x, y)->setColor(color);
 }
 
 void Snake::moveToStartPos(int x, int y) {
@@ -97,8 +97,8 @@ void Snake::moveToStartPos(int x, int y) {
     headPos->setX(x);
     headPos->setY(y);
     for ( int i = 0; i < size; i++ ) {
-        getSquareFromDailog(x - i, y)->setColor(color);
-        body->append(new QPoint(getSquareFromDailog(x - i, y)->x() / ((Dialog*) parent())->getSizeSquare(), getSquareFromDailog(x - i, y)->y() / ((Dialog*) parent())->getSizeSquare()));
+        getBlockFromDailog(x - i, y)->setColor(color);
+        body->append(new QPoint(getBlockFromDailog(x - i, y)->x() / ((Dialog*) parent())->getSideLenghtBlock(), getBlockFromDailog(x - i, y)->y() / ((Dialog*) parent())->getSideLenghtBlock()));
     }
 }
 
@@ -131,7 +131,7 @@ void Snake::stopOldTimer(Vector vecNew) {
 }
 
 void Snake::deleteLast() {
-    getSquareFromDailog(getLastPos())->setColor(((Dialog*) parent())->getColorSquares());
+    getBlockFromDailog(getLastPos())->setColor(((Dialog*) parent())->getColorBlocks());
 }
 
 

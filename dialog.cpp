@@ -1,5 +1,5 @@
 #include "dialog.h"
-#include "square.h"
+#include "block.h"
 #include "snake.h"
 #include <QTimer>
 #include <QColor>
@@ -10,59 +10,47 @@
 
 #define RGB_SQUARE   120, 190, 255
 #define TIME_UPDATE_COLOR 1
-#define W_SQUARE 7
-#define H_SQUARE 7
-#define WIN_W 50
-#define WIN_H 50
+#define W_SQUARE 30
+#define H_SQUARE 30
+#define WIN_W 15
+#define WIN_H 15
 
 Dialog::Dialog(QWidget *parent) : QDialog(parent), isUpdateingColors(false) {
-    colorSquares = new QColor(RGB_SQUARE);
+    colorBlocks = new QColor(RGB_SQUARE);
     updatedColorSqrCounter = 0;
-    sizeSquare = W_SQUARE;
-    amountSquares = WIN_W * WIN_H;
-    squaresStorage = new QVector<Square*>();
+    blockSideLength = W_SQUARE;
+    amountBlocks = WIN_W * WIN_H;
+    blocksStorage = new QVector<Block*>();
     setFixedSize(W_SQUARE * WIN_W, H_SQUARE * WIN_H);
 
-    for ( int i = 0; i < amountSquares; i++ ) {
-        squaresStorage->append(new Square(colorSquares, this));
-    }
-    status = new QLabel(this);
-    status->setGeometry(0, height() + 80, width() - 80, 20);
-    snake = new Snake(this, 0, 0);
+    //for ( int i = 0; i < amountSquares; i++ ) {
+        blocksStorage->append(new Block(colorBlocks, W_SQUARE, this));
+    //}
+    //snake = new Snake(this, 0, 0);
 //    for ( int  i = 0; i < 10; i++ ) {
 //        addEat();
 //    }
 }
 
-void Dialog::updateColorsSquares() {
-
+int Dialog::getSideLenghtBlock() {
+    return blockSideLength;
 }
 
-int Dialog::getSizeSquare() {
-    return sizeSquare;
+QColor* Dialog::getColorBlocks() {
+    return colorBlocks;
 }
-
-QColor* Dialog::getColorSquares() {
-    return colorSquares;
-}
-int Dialog::getAmountSquares() {
-    return amountSquares;
-}
-
-void Dialog::updateColorNextSquare() {
-}
-void Dialog::setColorAllSquares() {
-
+int Dialog::getAmountBlocks() {
+    return amountBlocks;
 }
 
 void Dialog::addEat() {
     int wRand = qrand() % WIN_W;
     int hRand = qrand() % WIN_H;
-    getSquareAt(wRand, hRand)->setEat();
+    getBlockAt(wRand, hRand)->setEat();
 }
 
-Square* Dialog::getSquareAt(int x, int y) {
-    return (Square*) childAt(x * W_SQUARE, y * H_SQUARE);
+Block* Dialog::getBlockAt(int x, int y) {
+    return (Block*) childAt(x * W_SQUARE, y * H_SQUARE);
 }
 
 void Dialog::keyPressEvent(QKeyEvent *event) {

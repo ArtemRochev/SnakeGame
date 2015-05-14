@@ -1,7 +1,7 @@
 #ifndef SNAKE_H
 #define SNAKE_H
 
-#include "square.h"
+#include "block.h"
 #include <QWidget>
 #include <QPoint>
 #include <QTimer>
@@ -16,8 +16,8 @@ class Snake : public QWidget {
         explicit Snake(QWidget*, int x, int y);
         enum Vector {Up, Down, Right, Left};
         QColor* getColorBackground();
-        Square* getSquareFromDailog(QPoint*);
-        Square* getSquareFromDailog(int x, int y);
+        Block* getBlockFromDailog(QPoint*);
+        Block* getBlockFromDailog(int x, int y);
         QPoint* getHeadPos();
         QPoint* getLastPos();
         Vector getCurrentVec();

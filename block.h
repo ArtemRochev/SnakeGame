@@ -1,23 +1,22 @@
-#ifndef SQUARE_H
-#define SQUARE_H
+#ifndef BLOCK_H
+#define BLOCK_H
 
 #include <QWidget>
 #include <QColor>
 
-class Square : public QWidget {
+class Block : public QWidget {
         Q_OBJECT
 
     public:
-        Square(QColor *color, QWidget *parent = 0);
+        Block(QColor *color, int sideLength, QWidget *parent = 0);
         void paintEvent(QPaintEvent*);
-        void mousePressEvent(QMouseEvent*);
         void enterEvent(QEvent*);
         void leaveEvent(QEvent*);
         void setIsEat(bool b);
         void setEat();
         void setColor(QColor*);
         void setColor(int r, int g, int b);
-        int getSize();
+        int getSideLength();
         bool isEat();
         QColor* getColor();
 
@@ -31,9 +30,9 @@ class Square : public QWidget {
         static int posX;
         static int posY;
         static int counter;
-        int size;
+        int sideLength;
         bool eat;
 
 };
 
-#endif // SQUARE_H
+#endif // BLOCK_H

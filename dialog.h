@@ -1,7 +1,7 @@
 #ifndef DIALOG_H
 #define DIALOG_H
 
-#include "square.h"
+#include "block.h"
 #include "snake.h"
 #include <QDialog>
 #include <QColor>
@@ -18,29 +18,25 @@ class Dialog : public QDialog {
         Dialog(QWidget *parent = 0);
         ~Dialog();
 
-        void updateColorsSquares();
-        int getAmountSquares();
-        int getSizeSquare();
+        int getAmountBlocks();
+        int getSideLenghtBlock();
         bool isUpdateingColors;
-        QColor* getColorSquares();
-        Square* getSquareAt(int x, int y);
+        QColor* getColorBlocks();
+        Block* getBlockAt(int x, int y);
 
     public slots:
-        void updateColorNextSquare();
-        void setColorAllSquares();
         void addEat();
 
     protected:
 
     private:
-        int sizeSquare;
-        int amountSquares;
+        int blockSideLength;
+        int amountBlocks;
         int updatedColorSqrCounter;
-        QVector<Square*> *squaresStorage;
-        QColor *colorSquares;
+        QVector<Block*> *blocksStorage;
+        QColor *colorBlocks;
         QTimer *timer;
         QTimer *clearTimer;
-        QLabel *status;
         QPushButton *buttonClear;
         Snake *snake;
         QPoint currentSnakePos;

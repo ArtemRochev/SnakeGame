@@ -15,12 +15,8 @@ TEMPLATE = app
 SOURCES += main.cpp\
         dialog.cpp \
     square.cpp \
-    snake.cpp \
-    window.cpp \
-    gamefield.cpp
+    snake.cpp
 
 HEADERS  += dialog.h \
     square.h \
-    snake.h \
-    window.h \
-    gamefield.h
+    snake.h

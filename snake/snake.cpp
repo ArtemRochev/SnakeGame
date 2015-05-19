@@ -10,6 +10,7 @@ Snake::Snake(QWidget *parent, int x, int y) : QWidget(parent) {
     timerMoveDown = new QTimer();
     timerMoveRight = new QTimer();
     timerMoveLeft = new QTimer();
+
     connect(timerMoveUp, SIGNAL(timeout()), this, SLOT(moveUp()) );
     connect(timerMoveDown, SIGNAL(timeout()), this, SLOT(moveDown()));
     connect(timerMoveRight, SIGNAL(timeout()), this, SLOT(moveRight()));
@@ -19,8 +20,10 @@ Snake::Snake(QWidget *parent, int x, int y) : QWidget(parent) {
     slowTime = 150;
     body = new QVector<QPoint*>;
     currentVec = Right;
-    color = new QColor(100, 0, 100);
+    color = new QColor(138, 75, 8);
     moveToStartPos(x, y);
+
+    qDebug() << "Snake created.";
 }
 
 QColor* Snake::getColorBackground() {
@@ -92,6 +95,7 @@ void Snake::moveToStartPos(int x, int y) {
     if ( x < size ) {
         x = size - 1;
     }
+
     headPos = new QPoint(x, y);
     lastPos = new QPoint(x+1-size, y);
     headPos->setX(x);

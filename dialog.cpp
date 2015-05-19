@@ -1,32 +1,36 @@
 #include "dialog.h"
-#include "block.h"
-#include "snake.h"
+#include "block/block.h"
+#include "snake/snake.h"
 #include <QTimer>
 #include <QColor>
 #include <QDebug>
 #include <QLabel>
+#include <QDir>
 #include <QKeyEvent>
 #include <QHBoxLayout>
 
-#define RGB_SQUARE   104, 138, 8
-#define W_BLOCK_AMOUNT 25
-#define H_BLOCK_AMOUNT 25
+#define RGB_SQUARE   0, 0, 0, 0
+#define W_BLOCK_AMOUNT 20
+#define H_BLOCK_AMOUNT 20
 
 Dialog::Dialog(QWidget *parent) : QDialog(parent) {
     colorBlocks = new QColor(RGB_SQUARE);
     updatedColorSqrCounter = 0;
-    blockSideLength = 20;
+    blockSideLength = 30;
     amountBlocks = W_BLOCK_AMOUNT * H_BLOCK_AMOUNT;
     blocksStorage = new QVector<Block*>();
 
     setFixedSize(blockSideLength * W_BLOCK_AMOUNT, blockSideLength * H_BLOCK_AMOUNT);
+    //qDebug() << "background: url(\"" + QDir::currentPath() + "/img/bg.jpg\")";
+    setStyleSheet("background: url(\"" + QDir::currentPath() + "/img/bg.jpg\")");
     fillByBlocks();
 
+    qDebug() << styleSheet();
     snake = new Snake(this, 0, 0);
 
-    for ( int  i = 0; i < 2; i++ ) {
-        addEat();
-    }
+//    for ( int  i = 0; i < 2; i++ ) {
+//        addEat();
+//    }
 }
 
 void Dialog::fillByBlocks() {

@@ -14,9 +14,9 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         dialog.cpp \
-    snake.cpp \
-    block.cpp
+    snake/snake.cpp \
+    block/block.cpp
 
 HEADERS  += dialog.h \
-    snake.h \
-    block.h
+    snake/snake.h \
+    block/block.h

@@ -3,16 +3,19 @@
 
 #include <QWidget>
 #include <QColor>
+#include <QPixmap>
 
 class Block : public QWidget {
     Q_OBJECT
 
     private:
-        QColor *colorBase;
-        QColor *colorCurrent;
         static int posX;
         static int posY;
         static int counter;
+
+        QColor *colorDeault;
+        QColor *colorCurrent;
+        QPixmap *bgPixmap;
         int sideLength;
         bool eat;
 

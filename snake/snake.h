@@ -1,7 +1,7 @@
 #ifndef SNAKE_H
 #define SNAKE_H
 
-#include "block.h"
+#include "block/block.h"
 #include <QWidget>
 #include <QPoint>
 #include <QTimer>

@@ -2,9 +2,11 @@
 #include "block.h"
 #include <QPainter>
 #include <QDebug>
+#include <QDir>
 #include <QMouseEvent>
 #include <QEvent>
 #include <QColor>
+#include <QPixmap>
 #include <QTimer>
 #include <math.h>
 
@@ -14,12 +16,12 @@ int Block::counter = 0;
 
 Block::Block(QColor *color, int sideLength, QWidget *parent) :
         QWidget(parent),
-        sideLength(sideLength),
-        colorBase(color),
-        colorCurrent(color) {
+        colorDeault(new QColor(0,0,0,0)),
+        colorCurrent(colorDeault),
+        sideLength(sideLength) {
     setGeometry(posX, posY, sideLength, sideLength);
     posX += sideLength;
-    colorCurrent = colorBase;
+    qDebug() << "GG";
     eat = false;
     counter += 1;
 
@@ -32,16 +34,24 @@ Block::Block(QColor *color, int sideLength, QWidget *parent) :
 void Block::paintEvent(QPaintEvent*) {
     QPainter p(this);
 
-    p.setPen(Qt::red);
+    //p.setPen(Qt::red);
+    //p.fillRect(0, 0, 50, 50, QBrush(*colorCurrent));
+    //qDebug() << QDir::currentPath() + "/img/bg.png";
+    //qDebug() << *colorCurrent;
+
+//    if ( *colorCurrent == *colorDeault ) {
+//       p.drawPixmap(this->rect(), *bgPixmap);
+//    } else {
     p.fillRect(0, 0, 50, 50, QBrush(*colorCurrent));
+//    }
 }
 
 void Block::enterEvent(QEvent*) {
-    colorCurrent = new QColor(colorCurrent->dark());
+    colorCurrent = new QColor(0,0,0,100);
     update();
 }
-void Block::leaveEvent(QEvent *event) {
-    colorCurrent = new QColor(*colorBase);
+void Block::leaveEvent(QEvent*) {
+    colorCurrent = colorDeault;
     update();
 }
 
@@ -55,14 +65,16 @@ void Block::setEat() {
 }
 
 void Block::setColor(QColor *colorNew) {
-    colorBase = colorNew;
-    colorCurrent = colorBase;
+    qDebug() << "setColor()";
+    //qDebug() << *colorNew;
+    colorCurrent = colorNew;
     update();
+    //colorCurrent = colorDeault;
 }
 void Block::setColor(int r, int g, int b) {
-    colorBase = new QColor(r, g, b);
-    colorCurrent = colorBase;
-    update();
+    //colorBase = new QColor(r, g, b);
+    //colorCurrent = colorBase;
+    //update();
 }
 
 int Block::getSideLength() {
@@ -74,7 +86,7 @@ bool Block::isEat() {
 }
 
 QColor* Block::getColor() {
-    return colorCurrent;
+    //return colorCurrent;
 }
 
 

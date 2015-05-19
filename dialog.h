@@ -1,8 +1,8 @@
 #ifndef DIALOG_H
 #define DIALOG_H
 
-#include "block.h"
-#include "snake.h"
+#include "block/block.h"
+#include "snake/snake.h"
 #include <QDialog>
 #include <QColor>
 #include <QVector>

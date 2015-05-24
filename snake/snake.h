@@ -21,8 +21,10 @@ class Snake : public QWidget {
         QPoint* getHeadPos();
         QPoint* getLastPos();
         Vector getCurrentVec();
+
         int getSize();
         int getSlowTime();
+
         void move(Vector);
         void moveTo(int x, int y);
         void moveToStartPos(int x, int y);

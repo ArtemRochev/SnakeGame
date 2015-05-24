@@ -11,13 +11,13 @@ Snake::Snake(QWidget *parent, int x, int y) : QWidget(parent) {
     timerMoveRight = new QTimer();
     timerMoveLeft = new QTimer();
 
-    connect(timerMoveUp, SIGNAL(timeout()), this, SLOT(moveUp()) );
+    connect(timerMoveUp, SIGNAL(timeout()), this, SLOT(moveUp()));
     connect(timerMoveDown, SIGNAL(timeout()), this, SLOT(moveDown()));
     connect(timerMoveRight, SIGNAL(timeout()), this, SLOT(moveRight()));
     connect(timerMoveLeft, SIGNAL(timeout()), this, SLOT(moveLeft()));
 
     size = 5;
-    slowTime = 150;
+    slowTime = 200;
     body = new QVector<QPoint*>;
     currentVec = Right;
     color = new QColor(138, 75, 8);
@@ -33,21 +33,27 @@ QColor* Snake::getColorBackground() {
 Block* Snake::getBlockFromDailog(QPoint *p) {
     return ((Dialog*) parent())->getBlockAt(p->x(), p->y());
 }
+
 Block* Snake::getBlockFromDailog(int x, int y) {
     return ((Dialog*) parent())->getBlockAt(x, y);
 }
+
 QPoint* Snake::getHeadPos() {
     return body->at(0);
 }
+
 QPoint* Snake::getLastPos() {
     return body->at(size-1);
 }
+
 Snake::Vector Snake::getCurrentVec() {
     return currentVec;
 }
+
 int Snake::getSize() {
     return size;
 }
+
 int Snake::getSlowTime() {
     return slowTime;
 }
@@ -55,6 +61,7 @@ int Snake::getSlowTime() {
 void Snake::move(Vector vecNew) {
     stopOldTimer(vecNew);
     currentVec = vecNew;
+
     if ( vecNew == Up ) {
         timerMoveUp->start(slowTime);
     } else if ( vecNew == Down ) {
@@ -64,30 +71,32 @@ void Snake::move(Vector vecNew) {
     } else {
         timerMoveLeft->start(slowTime);
     }
-
 }
 
 void Snake::moveTo(int x, int y) {
     Dialog *dialog = (Dialog*) parent();
     deleteLast();
+
     if ( getBlockFromDailog(x, y)->isEat() ) {
         size += 1;
+
         if ( slowTime > 1 ) {
             slowTime -= 5;
         }
+
         getBlockFromDailog(x, y)->setIsEat(false);
-        color = getBlockFromDailog(x, y)->getColor();
         dialog->addEat();
     } else {
         body->remove(size-1);
     }
+
     body->push_front(new QPoint(x, y));
 
     lastPos->setX(body->at(size-1)->x());
     lastPos->setY(body->at(size-1)->y());
-
     headPos->setX(x);
     headPos->setY(y);
+
     getBlockFromDailog(x, y)->setColor(color);
 }
 
@@ -110,6 +119,7 @@ void Snake::moveToStartPos(int x, int y) {
 void Snake::moveUp() {
     moveTo(headPos->x(), headPos->y() - 1);
 }
+
 void Snake::moveDown() {
     moveTo(headPos->x(), headPos->y() + 1);
 }
@@ -117,6 +127,7 @@ void Snake::moveDown() {
 void Snake::moveRight() {
     moveTo(headPos->x() + 1, headPos->y());
 }
+
 void Snake::moveLeft() {
     moveTo(headPos->x() - 1, headPos->y());
 }

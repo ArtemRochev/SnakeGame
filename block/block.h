@@ -15,7 +15,7 @@ class Block : public QWidget {
 
         QColor *colorDeault;
         QColor *colorCurrent;
-        QPixmap *bgPixmap;
+        QPixmap *eatPixmap;
         int sideLength;
         bool eat;
 

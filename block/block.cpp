@@ -18,6 +18,7 @@ Block::Block(QColor *color, int sideLength, QWidget *parent) :
         QWidget(parent),
         colorDeault(new QColor(0,0,0,0)),
         colorCurrent(colorDeault),
+        eatPixmap(new QPixmap(QDir::currentPath() + "/img/eat.png")),
         sideLength(sideLength) {
     setGeometry(posX, posY, sideLength, sideLength);
     posX += sideLength;
@@ -42,7 +43,13 @@ void Block::paintEvent(QPaintEvent*) {
 //    if ( *colorCurrent == *colorDeault ) {
 //       p.drawPixmap(this->rect(), *bgPixmap);
 //    } else {
-    p.fillRect(0, 0, 50, 50, QBrush(*colorCurrent));
+    p.fillRect(this->rect(), QBrush(*colorCurrent));
+
+    if ( eat ) {
+        qDebug() << "PIX: ";
+        qDebug() << *eatPixmap;
+        p.drawPixmap(this->rect(), *eatPixmap);
+    }
 //    }
 }
 
@@ -55,26 +62,23 @@ void Block::leaveEvent(QEvent*) {
     update();
 }
 
-void Block::setIsEat(bool b) {
-    eat = b;
+void Block::setIsEat(bool eat) {
+    this->eat = eat;
+    update();
 }
 
 void Block::setEat() {
-    setColor(255, 0, 0);
     eat = true;
+    update();
 }
 
 void Block::setColor(QColor *colorNew) {
-    qDebug() << "setColor()";
-    //qDebug() << *colorNew;
     colorCurrent = colorNew;
     update();
-    //colorCurrent = colorDeault;
 }
 void Block::setColor(int r, int g, int b) {
-    //colorBase = new QColor(r, g, b);
-    //colorCurrent = colorBase;
-    //update();
+    colorCurrent->setRgb(r, g, b);
+    update();
 }
 
 int Block::getSideLength() {

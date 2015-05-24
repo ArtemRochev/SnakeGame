@@ -33,21 +33,11 @@ Block::Block(QColor *color, int sideLength, QWidget *parent) :
 
 void Block::paintEvent(QPaintEvent*) {
     QPainter p(this);
-
-    //p.setPen(Qt::red);
-    //p.fillRect(0, 0, 50, 50, QBrush(*colorCurrent));
-    //qDebug() << QDir::currentPath() + "/img/bg.png";
-    //qDebug() << *colorCurrent;
-
-//    if ( *colorCurrent == *colorDeault ) {
-//       p.drawPixmap(this->rect(), *bgPixmap);
-//    } else {
     p.fillRect(this->rect(), QBrush(*colorCurrent));
 
     if ( eat ) {
         p.drawPixmap(this->rect(), *eatPixmap);
     }
-//    }
 }
 
 void Block::enterEvent(QEvent*) {
@@ -85,10 +75,3 @@ int Block::getSideLength() {
 bool Block::isEat() {
     return eat;
 }
-
-QColor* Block::getColor() {
-    //return colorCurrent;
-}
-
-
-

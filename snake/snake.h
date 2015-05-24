@@ -13,13 +13,25 @@ class Snake : public QWidget {
     Q_ENUMS(Vector)
 
     public:
+      enum Vector {Up, Down, Right, Left};
+
+    private:
+        int size;
+        int slowTime;
+        Vector currentVec;
+        QTimer *moveTimer;
+        QPoint *headPos;
+        QPoint *tailPos;
+        QColor *color;
+        QVector<QPoint*>*body;
+
+    public:
         explicit Snake(QWidget*, int x, int y);
-        enum Vector {Up, Down, Right, Left};
         QColor* getColorBackground();
         Block* getBlockFromDailog(QPoint*);
         Block* getBlockFromDailog(int x, int y);
         QPoint* getHeadPos();
-        QPoint* getLastPos();
+        QPoint* getTailPos();
         Vector getCurrentVec();
 
         int getSize();
@@ -30,19 +42,6 @@ class Snake : public QWidget {
         void moveToStartPos(int x, int y);
         void stopOldTimer(Vector);
         void deleteLast();
-
-    private:
-        int size;
-        int slowTime;
-        Vector currentVec;
-        QTimer *moveTimer;
-        QPoint *headPos;
-        QPoint *lastPos;
-        QColor *color;
-        QVector<QPoint*>*body;
-
-    signals:
-        void posChanged();
 
     public slots:
         void moveOn();

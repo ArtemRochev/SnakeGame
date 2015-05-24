@@ -17,7 +17,6 @@ Snake::Snake(QWidget *parent, int x, int y) :
     connect(moveTimer, SIGNAL(timeout()), this, SLOT(moveOn()));
     moveToStartPos(x, y);
     moveTimer->start(slowTime);
-
     qDebug() << "Snake created.";
 }
 
@@ -37,7 +36,7 @@ QPoint* Snake::getHeadPos() {
     return body->at(0);
 }
 
-QPoint* Snake::getLastPos() {
+QPoint* Snake::getTailPos() {
     return body->at(size-1);
 }
 
@@ -54,7 +53,6 @@ int Snake::getSlowTime() {
 }
 
 void Snake::changeVector(Vector vecNew) {
-    //stopOldTimer(vecNew);
     currentVec = vecNew;
 }
 
@@ -84,6 +82,7 @@ void Snake::moveTo(int x, int y) {
 
         if ( slowTime > 1 ) {
             slowTime -= 5;
+            moveTimer->setInterval(slowTime);
         }
 
         getBlockFromDailog(x, y)->setIsEat(false);
@@ -94,8 +93,8 @@ void Snake::moveTo(int x, int y) {
 
     body->push_front(new QPoint(x, y));
 
-    lastPos->setX(body->at(size-1)->x());
-    lastPos->setY(body->at(size-1)->y());
+    tailPos->setX(body->at(size-1)->x());
+    tailPos->setY(body->at(size-1)->y());
     headPos->setX(x);
     headPos->setY(y);
 
@@ -108,7 +107,7 @@ void Snake::moveToStartPos(int x, int y) {
     }
 
     headPos = new QPoint(x, y);
-    lastPos = new QPoint(x+1-size, y);
+    tailPos = new QPoint(x+1-size, y);
     headPos->setX(x);
     headPos->setY(y);
 
@@ -118,22 +117,8 @@ void Snake::moveToStartPos(int x, int y) {
     }
 }
 
-void Snake::stopOldTimer(Vector vecNew) {
-//    if ( vecNew != currentVec ) {
-//        if ( currentVec == Up ) {
-//            timerMoveUp->stop();
-//        } else if ( currentVec == Down ) {
-//            timerMoveDown->stop();
-//        } else if ( currentVec == Right ) {
-//            timerMoveRight->stop();
-//        } else {
-//            timerMoveLeft->stop();
-//        }
-//    }
-}
-
 void Snake::deleteLast() {
-    getBlockFromDailog(getLastPos())->setColor(((Dialog*) parent())->getColorBlocks());
+    getBlockFromDailog(getTailPos())->setColor(((Dialog*) parent())->getColorBlocks());
 }
 
 

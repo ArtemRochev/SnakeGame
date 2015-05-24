@@ -66,15 +66,13 @@ Block* Dialog::getBlockAt(int x, int y) const {
 
 void Dialog::keyPressEvent(QKeyEvent *event) {
     if ( event->key() == Qt::Key_Up ) {
-        snake->move(Snake::Up);
+        snake->changeVector(Snake::Up);
     } else if ( event->key() == Qt::Key_Down ) {
-        snake->move(Snake::Down);
+        snake->changeVector(Snake::Down);
     } else if ( event->key() == Qt::Key_Right ) {
-        snake->move(Snake::Right);
+        snake->changeVector(Snake::Right);
     } else if ( event->key() == Qt::Key_Left ) {
-        snake->move(Snake::Left);
-    } else if ( event->key() == Qt::Key_Space ) {
-        snake->move(snake->getCurrentVec());
+        snake->changeVector(Snake::Left);
     }
 }
 

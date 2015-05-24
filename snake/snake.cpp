@@ -4,24 +4,19 @@
 #include <QTimer>
 #include <QLabel>
 
-Snake::Snake(QWidget *parent, int x, int y) : QWidget(parent) {
+Snake::Snake(QWidget *parent, int x, int y) :
+        QWidget(parent),
+        size(5),
+        slowTime(200),
+        currentVec(Right),
+        moveTimer(new QTimer()),
+        color(new QColor(138, 75, 8)),
+        body(new QVector<QPoint*>) {
     setHidden(true);
-    timerMoveUp = new QTimer();
-    timerMoveDown = new QTimer();
-    timerMoveRight = new QTimer();
-    timerMoveLeft = new QTimer();
 
-    connect(timerMoveUp, SIGNAL(timeout()), this, SLOT(moveUp()));
-    connect(timerMoveDown, SIGNAL(timeout()), this, SLOT(moveDown()));
-    connect(timerMoveRight, SIGNAL(timeout()), this, SLOT(moveRight()));
-    connect(timerMoveLeft, SIGNAL(timeout()), this, SLOT(moveLeft()));
-
-    size = 5;
-    slowTime = 200;
-    body = new QVector<QPoint*>;
-    currentVec = Right;
-    color = new QColor(138, 75, 8);
+    connect(moveTimer, SIGNAL(timeout()), this, SLOT(moveOn()));
     moveToStartPos(x, y);
+    moveTimer->start(slowTime);
 
     qDebug() << "Snake created.";
 }
@@ -58,19 +53,26 @@ int Snake::getSlowTime() {
     return slowTime;
 }
 
-void Snake::move(Vector vecNew) {
-    stopOldTimer(vecNew);
+void Snake::changeVector(Vector vecNew) {
+    //stopOldTimer(vecNew);
     currentVec = vecNew;
+}
 
-    if ( vecNew == Up ) {
-        timerMoveUp->start(slowTime);
-    } else if ( vecNew == Down ) {
-        timerMoveDown->start(slowTime);
-    } else if ( vecNew == Right ) {
-        timerMoveRight->start(slowTime);
-    } else {
-        timerMoveLeft->start(slowTime);
+void Snake::moveOn() {
+    int xChange = 0;
+    int yChange = 0;
+
+    if ( currentVec == Up ) {
+        yChange = -1;
+    } else if ( currentVec == Right ) {
+        xChange = 1;
+    } else if ( currentVec == Down ) {
+        yChange = 1;
+    } else if ( currentVec == Left ) {
+        xChange = -1;
     }
+
+    moveTo(headPos->x() + xChange, headPos->y() + yChange);
 }
 
 void Snake::moveTo(int x, int y) {
@@ -116,34 +118,18 @@ void Snake::moveToStartPos(int x, int y) {
     }
 }
 
-void Snake::moveUp() {
-    moveTo(headPos->x(), headPos->y() - 1);
-}
-
-void Snake::moveDown() {
-    moveTo(headPos->x(), headPos->y() + 1);
-}
-
-void Snake::moveRight() {
-    moveTo(headPos->x() + 1, headPos->y());
-}
-
-void Snake::moveLeft() {
-    moveTo(headPos->x() - 1, headPos->y());
-}
-
 void Snake::stopOldTimer(Vector vecNew) {
-    if ( vecNew != currentVec ) {
-        if ( currentVec == Up ) {
-            timerMoveUp->stop();
-        } else if ( currentVec == Down ) {
-            timerMoveDown->stop();
-        } else if ( currentVec == Right ) {
-            timerMoveRight->stop();
-        } else {
-            timerMoveLeft->stop();
-        }
-    }
+//    if ( vecNew != currentVec ) {
+//        if ( currentVec == Up ) {
+//            timerMoveUp->stop();
+//        } else if ( currentVec == Down ) {
+//            timerMoveDown->stop();
+//        } else if ( currentVec == Right ) {
+//            timerMoveRight->stop();
+//        } else {
+//            timerMoveLeft->stop();
+//        }
+//    }
 }
 
 void Snake::deleteLast() {

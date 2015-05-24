@@ -22,7 +22,6 @@ Block::Block(QColor *color, int sideLength, QWidget *parent) :
         sideLength(sideLength) {
     setGeometry(posX, posY, sideLength, sideLength);
     posX += sideLength;
-    qDebug() << "GG";
     eat = false;
     counter += 1;
 
@@ -46,8 +45,6 @@ void Block::paintEvent(QPaintEvent*) {
     p.fillRect(this->rect(), QBrush(*colorCurrent));
 
     if ( eat ) {
-        qDebug() << "PIX: ";
-        qDebug() << *eatPixmap;
         p.drawPixmap(this->rect(), *eatPixmap);
     }
 //    }

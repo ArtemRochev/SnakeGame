@@ -25,7 +25,7 @@ class Snake : public QWidget {
         int getSize();
         int getSlowTime();
 
-        void move(Vector);
+        void changeVector(Vector);
         void moveTo(int x, int y);
         void moveToStartPos(int x, int y);
         void stopOldTimer(Vector);
@@ -35,10 +35,7 @@ class Snake : public QWidget {
         int size;
         int slowTime;
         Vector currentVec;
-        QTimer *timerMoveUp;
-        QTimer *timerMoveDown;
-        QTimer *timerMoveRight;
-        QTimer *timerMoveLeft;
+        QTimer *moveTimer;
         QPoint *headPos;
         QPoint *lastPos;
         QColor *color;
@@ -48,10 +45,7 @@ class Snake : public QWidget {
         void posChanged();
 
     public slots:
-        void moveUp();
-        void moveDown();
-        void moveRight();
-        void moveLeft();
+        void moveOn();
 };
 
 #endif // SNAKE_H
